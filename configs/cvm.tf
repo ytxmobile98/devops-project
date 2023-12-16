@@ -1,6 +1,6 @@
 resource "tencentcloud_instance" "devops_cvm" {
     instance_name = "devops_cvm"
-    availability_zone = "ap-guangzhou-3"
+    availability_zone = var.availability_zone
     image_id = "img-eb30mz89" # May be obtained using https://console.cloud.tencent.com/api/explorer?Product=cvm&Version=2017-03-12&Action=DescribeImages
     instance_type = "S2.MEDIUM2"
     system_disk_type = "CLOUD_PREMIUM"
