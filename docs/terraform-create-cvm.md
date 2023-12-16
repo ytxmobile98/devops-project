@@ -121,3 +121,13 @@ sudo apt update && sudo apt install terraform
 * `vpc.tf`
 
 然后使用 `terraform apply`。
+
+## 创建好的机器
+
+共创建了三个实例：
+
+1. `ins-qkgiq96q`
+2. `ins-o1zqnubk`
+3. `ins-my8ic1mw`
+
+![CVM](../images/cvm.png)
