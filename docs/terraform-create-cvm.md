@@ -105,3 +105,29 @@ sudo apt update && sudo apt install terraform
     rerun this command to reinitialize your working directory. If you forget, other
     commands will detect it and remind you to do so if necessary.
     ```
+
+# 部署腾讯云资源
+
+> 参考：
+> * https://registry.terraform.io/providers/tencentcloudstack/tencentcloud/latest/docs
+> * https://cloud.tencent.com/developer/article/1473713
+
+创建文件：
+
+* `cvm.tf`
+* `provider.tf`
+* `security-group.tf`
+* `subnet.tf`
+* `vpc.tf`
+
+然后使用 `terraform apply`。
+
+## 创建好的机器
+
+共创建了三个实例：
+
+1. `ins-qkgiq96q`
+2. `ins-o1zqnubk`
+3. `ins-my8ic1mw`
+
+![CVM](../images/cvm.png)
