@@ -23,3 +23,8 @@ sudo apt update && sudo apt install terraform
     * 创建好的用户将会拥有密钥 `SecretId` 和 `SecretKey`。
 
     ![腾讯云-快速创建用户](../images/tencent-cloud-create-user.png)
+3. 创建用户成功。
+
+    * 请务必保存用户名、密码和密钥信息，否则将不能再次获取。
+
+    ![腾讯云-创建用户成功](../images/tencent-cloud-create-user-success.png)
