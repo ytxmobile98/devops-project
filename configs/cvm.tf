@@ -13,4 +13,8 @@ resource "tencentcloud_instance" "devops_cvm_1" {
 
   allocate_public_ip = var.cvm_allocate_public_ip
   internet_max_bandwidth_out = var.cvm_internet_max_bandwidth_out
+
+  key_ids = [
+    tencentcloud_key_pair.devops_cvm_key_pair.id
+  ]
 }
