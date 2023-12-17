@@ -25,6 +25,27 @@ variable "cvm_disk_type" {
   default = "CLOUD_PREMIUM"
 }
 
+# Security Group
+variable "security_group_name" {
+  default = "sg-gz"
+}
+variable "security_group_ingress" {
+  type = list(string)
+  default = [
+    "ACCEPT#192.168.1.0/24#80#TCP",
+    "DROP#8.8.8.8#80,90#UDP",
+    "ACCEPT#0.0.0.0/0#80-90#TCP",
+  ]
+}
+variable "security_group_egress" {
+  type = list(string)
+  default = [
+    "ACCEPT#192.168.0.0/16#ALL#TCP",
+    "ACCEPT#10.0.0.0/8#ALL#ICMP",
+    "DROP#0.0.0.0/0#ALL#ALL",
+  ]
+}
+
 # Subnet
 variable "subnet_name" {
   default = "subnet_gz"
