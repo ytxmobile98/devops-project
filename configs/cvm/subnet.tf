@@ -1,6 +1,6 @@
 resource "tencentcloud_subnet" "subnet_gz" {
-  name = var.subnet_name
-  cidr_block = var.subnet_cidr_block
+  name = "subnet_gz"
+  cidr_block = "10.0.1.0/24"
   availability_zone = var.cvm_availability_zone
   vpc_id = tencentcloud_vpc.vpc_gz.id
 }
