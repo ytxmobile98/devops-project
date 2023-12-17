@@ -66,3 +66,12 @@ variable "vpc_name" {
 variable "vpc_cidr_block" {
   default = "10.0.0.0/16"
 }
+
+# Install kubectl in CVM
+# Reference: https://kubernetes.io/docs/tasks/tools/install-kubectl-linux
+variable "kubectl_download_latest" {
+  default = "curl -L -o /tmp/kubectl \"https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl\""
+}
+variable "kubectl_install" {
+  default = "sudo install -o root -g root -m 0755 /tmp/kubectl /usr/local/bin/kubectl"
+}

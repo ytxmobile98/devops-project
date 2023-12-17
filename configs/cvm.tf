@@ -17,4 +17,24 @@ resource "tencentcloud_instance" "devops_cvm_1" {
   key_ids = [
     tencentcloud_key_pair.devops_cvm_key_pair.id
   ]
+
+  connection {
+    timeout = "60s"
+    type = "ssh"
+    host = tencentcloud_instance.devops_cvm_1.public_ip
+  }
+
+  # Install kubectl on CVM
+  provisioner "local-exec" {
+    command = var.kubectl_download_latest
+  }
+  provisioner "file" {
+    destination = "/tmp/kubectl"
+    source = "/tmp/kubectl"
+  }
+  provisioner "remote-exec" {
+    inline = [
+      var.kubectl_install
+    ]
+  }
 }
