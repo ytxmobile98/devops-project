@@ -25,6 +25,14 @@ variable "cvm_disk_type" {
   default = "CLOUD_PREMIUM"
 }
 
+# CVM public IP & max bandwidth out
+variable "cvm_allocate_public_ip" {
+  default = true
+}
+variable "cvm_internet_max_bandwidth_out" {
+  default = 100
+}
+
 # Security Group
 variable "security_group_name" {
   default = "sg-gz"
