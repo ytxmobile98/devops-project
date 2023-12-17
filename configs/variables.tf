@@ -33,7 +33,7 @@ variable "security_group_ingress" {
   type = list(string)
   default = [
     "ACCEPT#0.0.0.0/0#22#TCP", # Allow SSH access
-    "ACCEPT#0.0.0.0/0#6443#TCP",
+    "ACCEPT#0.0.0.0/0#6443#TCP", # For Kubernetes
   ]
 }
 variable "security_group_egress" {
