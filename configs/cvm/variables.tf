@@ -1,10 +1,10 @@
 # CVM Region and availability zone
 # See: https://www.tencentcloud.com/zh/document/product/213/6091
 variable "cvm_region" {
-  default = "ap-guangzhou"
+  default = "ap-hongkong"
 }
 variable "cvm_availability_zone" {
-  default = "ap-guangzhou-3"
+  default = "ap-hongkong-2"
 }
 
 # CVM Image ID

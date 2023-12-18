@@ -1,9 +1,9 @@
-resource "tencentcloud_security_group" "sg_gz" {
-  name = "sg_gz"
+resource "tencentcloud_security_group" "sg_hongkong" {
+  name = "sg_hongkong"
 }
 
-resource "tencentcloud_security_group_lite_rule" "sg_gz" {
-  security_group_id = tencentcloud_security_group.sg_gz.id
+resource "tencentcloud_security_group_lite_rule" "sg_hongkong" {
+  security_group_id = tencentcloud_security_group.sg_hongkong.id
 
   ingress = [
     "ACCEPT#0.0.0.0/0#ALL#ICMP", # Allow ping
