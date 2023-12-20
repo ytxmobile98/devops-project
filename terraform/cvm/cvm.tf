@@ -1,10 +1,14 @@
-resource "tencentcloud_instance" "cvm_1" {
-  instance_name     = var.cvm_instance_names[0]
-  availability_zone = var.cvm_availability_zone
-  image_id          = var.cvm_image_id
-  instance_type     = var.cvm_instance_type
+module "common" {
+  source = "../common"
+}
 
-  system_disk_type = var.cvm_disk_type
+resource "tencentcloud_instance" "cvm_1" {
+  instance_name     = module.common.cvm.instance_names[0]
+  availability_zone = module.common.cvm.availability_zone
+  image_id          = module.common.cvm.image_id
+  instance_type     = module.common.cvm.instance_type
+
+  system_disk_type = module.common.cvm.disk_type
   system_disk_size = 100
 
   vpc_id    = tencentcloud_vpc.vpc_hongkong.id
@@ -17,7 +21,13 @@ resource "tencentcloud_instance" "cvm_1" {
   allocate_public_ip         = true
   internet_max_bandwidth_out = 100
 
-  key_ids = [
-    tencentcloud_key_pair.devops_cvm_key_pair.id
-  ]
+  password = module.common.cvm.connection.password
+
+  connection {
+    type     = "ssh"
+    timeout  = "60s"
+    host     = self.public_ip
+    user     = module.common.cvm.connection.user
+    password = module.common.cvm.connection.password
+  }
 }
