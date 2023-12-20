@@ -19,9 +19,9 @@ output "cvm" {
 
     # Instance names
     instance_names = [
-      "devops_hongkong_cvm_1",
-      "devops_hongkong_cvm_2",
-      "devops_hongkong_cvm_3",
+      "devops-hongkong-cvm-1",
+      "devops-hongkong-cvm-2",
+      "devops-hongkong-cvm-3",
     ]
 
     # Connection

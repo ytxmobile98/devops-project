@@ -1,5 +1,5 @@
 resource "tencentcloud_security_group" "sg_hongkong" {
-  name = "sg_hongkong"
+  name = "sg-hongkong"
 }
 
 resource "tencentcloud_security_group_lite_rule" "sg_hongkong" {
