@@ -55,7 +55,7 @@ sudo apt update && sudo apt install terraform
         ```env
         TENCENTCLOUD_SECRET_ID=xxxxxxxxxx
         TENCENTCLOUD_SECRET_KEY=xxxxxxxxxx
-        TENCENTCLOUD_REGION="ap-guangzhou"
+        TENCENTCLOUD_REGION="ap-hongkong"
         ```
     * [`export-tencent-cloud-credentials.sh`](../configs/credentials/export-tencent-cloud-credentials.sh)
 

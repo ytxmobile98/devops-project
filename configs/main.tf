@@ -1,0 +1,3 @@
+module "cvm" {
+  source = "./cvm"
+}
