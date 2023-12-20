@@ -1,5 +1,5 @@
-resource "tencentcloud_instance" "devops_cvm_1" {
-  instance_name     = "devops_cvm_1"
+resource "tencentcloud_instance" "cvm_1" {
+  instance_name     = var.cvm_instance_names[0]
   availability_zone = var.cvm_availability_zone
   image_id          = var.cvm_image_id
   instance_type     = var.cvm_instance_type

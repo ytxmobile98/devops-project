@@ -24,3 +24,12 @@ variable "cvm_instance_type" {
 variable "cvm_disk_type" {
   default = "CLOUD_PREMIUM"
 }
+
+# Instance names
+variable "cvm_instance_names" {
+  default = [
+    "devops_hongkong_cvm_1",
+    "devops_hongkong_cvm_2",
+    "devops_hongkong_cvm_3",
+  ]
+}
