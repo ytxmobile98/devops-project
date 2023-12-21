@@ -1,3 +1,8 @@
+locals {
+  init_script_source      = "${path.module}/scripts/init.sh"
+  init_script_destination = "/tmp/${basename(local.init_script_source)}"
+}
+
 module "common" {
   source = "./common"
 }
@@ -26,15 +31,22 @@ resource "null_resource" "connect_cvm_1" {
     password = module.common.cvm.connection.password
   }
 
+  triggers = {
+    script_hash = join(",", [
+      filemd5(local.init_script_source),
+      filemd5(join("/", [path.module, "main.tf"])),
+    ])
+  }
+
   provisioner "file" {
-    destination = "/tmp/init.sh"
-    source = "${path.module}/scripts/init.sh"
+    destination = local.init_script_destination
+    source      = local.init_script_source
   }
 
   provisioner "remote-exec" {
     inline = [
-      "chmod +x /tmp/init.sh",
-      "/tmp/init.sh",
+      "chmod +x ${local.init_script_destination}",
+      "sudo ${local.init_script_destination}",
     ]
   }
 }

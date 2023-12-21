@@ -44,3 +44,5 @@ function main {
   setup_cli
   setup_helm
 }
+
+main
