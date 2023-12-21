@@ -1,6 +1,13 @@
 locals {
   init_script_source      = "${path.module}/../scripts/init.sh"
   init_script_destination = "/tmp/${basename(local.init_script_source)}"
+
+  yaml_dir_source      = "${path.module}/../yaml"
+  yaml_dir_destination = "/tmp/yaml"
+  yaml_dirs = [
+    "github",
+    "jenkins",
+  ]
 }
 
 module "common" {
@@ -38,6 +45,29 @@ resource "null_resource" "connect_cvm_1" {
     ])
   }
 
+  provisioner "remote-exec" {
+    inline = [
+      for dir in local.yaml_dirs : "mkdir -p ${local.yaml_dir_destination}/${dir}"
+    ]
+  }
+
+  # Jenkins configuration files
+  provisioner "file" {
+    destination = "${local.yaml_dir_destination}/jenkins/service-account.yaml"
+    source      = "${local.yaml_dir_source}/jenkins/service-account.yaml"
+  }
+  provisioner "file" {
+    destination = "${local.yaml_dir_destination}/jenkins/values.yaml"
+    content = templatefile(
+      "${local.yaml_dir_source}/jenkins/values.yaml.tpl",
+      {
+        prefix = var.jenkins_values_prefix,
+        domain = var.jenkins_values_domain,
+      }
+    )
+  }
+
+  # init script
   provisioner "file" {
     destination = local.init_script_destination
     source      = local.init_script_source
