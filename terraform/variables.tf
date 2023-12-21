@@ -1,20 +1,15 @@
 # GitHub configurations
 variable "github_username" {
+  type    = string
   default = "ytxmobile98"
 }
 variable "github_personal_token" {
+  type    = string
   default = ""
 }
 
-# Jenkins configurations
-variable "jenkins_values_prefix" {
-  default = "ytxmobile"
-}
-variable "jenkins_values_domain" {
-  default = "devopscamp.us"
-}
-
-# Argo CD configurations
-variable "argocd_domain" {
-  default = "devopscamp.us"
+# CloudFlare configurations
+variable "cloudflare_api_token" {
+  type    = string
+  default = ""
 }

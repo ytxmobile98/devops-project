@@ -16,9 +16,16 @@ function export_github_credentials {
   export TF_VAR_github_personal_token
 }
 
+function export_cloudflare_credentials {
+  . "$CURRENT_DIR/cloudflare.env"
+
+  export TF_VAR_cloudflare_api_token
+}
+
 function main {
   export_tencent_cloud_credentials
   export_github_credentials
+  export_cloudflare_credentials
 }
 
 main

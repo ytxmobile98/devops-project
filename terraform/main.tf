@@ -12,6 +12,9 @@ locals {
     "jenkins",
     "nginx",
   ]
+
+  domain = module.common.domain
+  prefix = module.common.prefix
 }
 
 module "common" {
@@ -31,6 +34,16 @@ module "k3s" {
   server_name  = module.common.k3s.server_names[0]
   ssh_user     = module.common.cvm.connection.user
   ssh_password = module.common.cvm.connection.password
+}
+
+module "cloudflare" {
+  source = "./cloudflare"
+
+  api_token = var.cloudflare_api_token
+  domain    = local.domain
+  prefix    = local.prefix
+  ip        = module.cvm.cvm_instances[0].public_ip
+  sub_names = ["argocd", "jenkins"]
 }
 
 resource "null_resource" "connect_cvm_1" {
@@ -94,8 +107,8 @@ resource "null_resource" "connect_cvm_1" {
     content = templatefile(
       "${local.yaml_dir_source}/jenkins/values.yaml.tpl",
       {
-        prefix = var.jenkins_values_prefix,
-        domain = var.jenkins_values_domain,
+        prefix = local.prefix,
+        domain = local.domain,
       }
     )
   }
@@ -122,7 +135,7 @@ resource "null_resource" "connect_cvm_1" {
     content = templatefile(
       "${local.yaml_dir_source}/argocd/dashboard-ingress.yaml.tpl",
       {
-        domain = var.argocd_domain,
+        domain = local.domain,
       }
     )
   }
