@@ -1,0 +1,29 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: bookinfo
+  namespace: argocd
+spec:
+  generators:
+    - clusters:
+        selector:
+          matchLabels:
+            use: prod
+  template:
+    metadata:
+      name: '{{name}}-bookinfo'
+    spec:
+      project: "default"
+      source:
+        repoURL: https://github.com/ytxmobile98/devops-project.git
+        targetRevision: HEAD
+        path: bookinfo
+      destination:
+        server: '{{server}}'
+        namespace: default
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true

@@ -22,12 +22,4 @@ resource "tencentcloud_instance" "cvm_1" {
   internet_max_bandwidth_out = 100
 
   password = module.common.cvm.connection.password
-
-  connection {
-    type     = "ssh"
-    timeout  = "60s"
-    host     = self.public_ip
-    user     = module.common.cvm.connection.user
-    password = module.common.cvm.connection.password
-  }
 }
