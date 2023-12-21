@@ -1,3 +1,11 @@
+# GitHub configurations
+variable "github_username" {
+  default = "ytxmobile98"
+}
+variable "github_personal_token" {
+  default = ""
+}
+
 # Jenkins configurations
 variable "jenkins_values_prefix" {
   default = "ytxmobile"

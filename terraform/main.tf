@@ -51,6 +51,27 @@ resource "null_resource" "connect_cvm_1" {
     ]
   }
 
+  # GitHub configuration files
+  provisioner "file" {
+    destination = "${local.yaml_dir_destination}/github/pat-secret-text.yaml"
+    content = templatefile(
+      "${local.yaml_dir_source}/github/pat-secret-text.yaml.tpl",
+      {
+        github_personal_token = var.github_personal_token,
+      }
+    )
+  }
+  provisioner "file" {
+    destination = "${local.yaml_dir_destination}/github/personal-token.yaml"
+    content = templatefile(
+      "${local.yaml_dir_source}/github/personal-token.yaml.tpl",
+      {
+        github_username       = var.github_username,
+        github_personal_token = var.github_personal_token,
+      }
+    )
+  }
+
   # Jenkins configuration files
   provisioner "file" {
     destination = "${local.yaml_dir_destination}/jenkins/service-account.yaml"
