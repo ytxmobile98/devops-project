@@ -36,13 +36,14 @@ function setup_helm_repo {
   helm repo update
 }
 
-function setup_helm {
-  setup_helm_repo
+function setup_jenkins {
+  kubectl create ns jenkins
 }
 
 function main {
   setup_cli
-  setup_helm
+  setup_helm_repo
+  setup_jenkins
 }
 
 main

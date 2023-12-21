@@ -1,0 +1,1 @@
+../credentials/export-tencent-cloud-credentials.sh

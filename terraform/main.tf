@@ -1,5 +1,5 @@
 locals {
-  init_script_source      = "${path.module}/scripts/init.sh"
+  init_script_source      = "${path.module}/../scripts/init.sh"
   init_script_destination = "/tmp/${basename(local.init_script_source)}"
 }
 
