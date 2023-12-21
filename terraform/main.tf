@@ -45,6 +45,7 @@ resource "null_resource" "connect_cvm_1" {
     ])
   }
 
+  # Create YAML directories
   provisioner "remote-exec" {
     inline = [
       for dir in local.yaml_dirs : "mkdir -p ${local.yaml_dir_destination}/${dir}"
