@@ -36,13 +36,31 @@ function setup_helm_repo {
   helm repo update
 }
 
+function setup_ingress_nginx {
+  helm upgrade --install ingress-nginx ingress-nginx \
+    --namespace ingress-nginx \
+    --create-namespace \
+    --values "$CURDIR/../yaml/ingress-value.yaml" \
+    --version "4.8.4" \
+    --wait
+}
+
 function setup_jenkins {
   kubectl create ns jenkins
+
+  kubectl apply -f /tmp/yaml/github/pat-secret-text.yaml
+  kubectl apply -f /tmp/yaml/github/personal-token.yaml
+  kubectl apply -f /tmp/yaml/jenkins/service-account.yaml
+
+  helm upgrade -i jenkins jenkins/jenkins \
+    -n jenkins --create-namespace \
+    -f /tmp/yaml/jenkins/values.yaml --version "4.6.1"
 }
 
 function main {
   setup_cli
   setup_helm_repo
+  setup_ingress_nginx
   setup_jenkins
 }
 

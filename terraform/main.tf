@@ -7,6 +7,7 @@ locals {
   yaml_dirs = [
     "github",
     "jenkins",
+    "nginx",
   ]
 }
 
@@ -87,6 +88,12 @@ resource "null_resource" "connect_cvm_1" {
         domain = var.jenkins_values_domain,
       }
     )
+  }
+
+  # NGINX configuration files
+  provisioner "file" {
+    destination = "${local.yaml_dir_destination}/nginx/ingress-value.yaml"
+    source      = "${local.yaml_dir_source}/nginx/ingress-value.yaml"
   }
 
   # init script
