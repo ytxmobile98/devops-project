@@ -13,3 +13,8 @@ variable "jenkins_values_prefix" {
 variable "jenkins_values_domain" {
   default = "devopscamp.us"
 }
+
+# Argo CD configurations
+variable "argocd_domain" {
+  default = "devopscamp.us"
+}

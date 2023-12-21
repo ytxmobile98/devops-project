@@ -37,11 +37,11 @@ function setup_helm_repo {
 }
 
 function setup_ingress_nginx {
-  helm upgrade --install ingress-nginx ingress-nginx \
+  helm upgrade --install ingress-nginx ingress-nginx/ingress-nginx \
     --namespace ingress-nginx \
     --create-namespace \
-    --values "$CURDIR/../yaml/ingress-value.yaml" \
-    --version "4.8.4" \
+    --values "$CURDIR/../yaml/nginx/ingress-value.yaml" \
+    --version "4.8.3" \
     --wait
 }
 
@@ -57,11 +57,32 @@ function setup_jenkins {
     -f /tmp/yaml/jenkins/values.yaml --version "4.6.1"
 }
 
+function setup_crossplane {
+  helm upgrade -i crossplane \
+    --namespace crossplane-system \
+    --create-namespace crossplane-stable/crossplane \
+    --version "1.14.0" \
+    --wait
+
+  kubectl apply -f /tmp/yaml/crossplane/provider.yaml -n crossplane-system
+}
+
+function setup_argocd {
+  kubectl create namespace argocd
+
+  kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+
+  kubectl apply -f /tmp/yaml/argocd/applicationset.yaml -n argocd
+  kubectl apply -f /tmp/yaml/argocd/dashboard-ingress.yaml -n argocd
+}
+
 function main {
   setup_cli
   setup_helm_repo
   setup_ingress_nginx
   setup_jenkins
+  setup_crossplane
+  setup_argocd
 }
 
 main

@@ -1,10 +1,13 @@
 locals {
-  init_script_source      = "${path.module}/../scripts/init.sh"
-  init_script_destination = "/tmp/${basename(local.init_script_source)}"
+  init_script_source          = "${path.module}/../scripts/init.sh"
+  init_script_destination_dir = "/tmp/scripts"
+  init_script_destination     = "${local.init_script_destination_dir}/${basename(local.init_script_source)}"
 
   yaml_dir_source      = "${path.module}/../yaml"
   yaml_dir_destination = "/tmp/yaml"
-  yaml_dirs = [
+  yaml_dirnames = [
+    "argocd",
+    "crossplane",
     "github",
     "jenkins",
     "nginx",
@@ -46,11 +49,18 @@ resource "null_resource" "connect_cvm_1" {
     ])
   }
 
-  # Create YAML directories
+  # Create directories needed for initialization
   provisioner "remote-exec" {
-    inline = [
-      for dir in local.yaml_dirs : "mkdir -p ${local.yaml_dir_destination}/${dir}"
-    ]
+    inline = concat(
+      [
+        # Create init script directory
+        "mkdir -p ${local.init_script_destination_dir}",
+      ],
+      [
+        # Create YAML directories
+        for dir in local.yaml_dirnames : "mkdir -p ${local.yaml_dir_destination}/${dir}"
+      ],
+    )
   }
 
   # GitHub configuration files
@@ -94,6 +104,27 @@ resource "null_resource" "connect_cvm_1" {
   provisioner "file" {
     destination = "${local.yaml_dir_destination}/nginx/ingress-value.yaml"
     source      = "${local.yaml_dir_source}/nginx/ingress-value.yaml"
+  }
+
+  # Crossplane configuration files
+  provisioner "file" {
+    destination = "${local.yaml_dir_destination}/crossplane/provider.yaml"
+    source      = "${local.yaml_dir_source}/crossplane/provider.yaml"
+  }
+
+  # Argo CD configuration files
+  provisioner "file" {
+    destination = "${local.yaml_dir_destination}/argocd/applicationset.yaml"
+    source      = "${local.yaml_dir_source}/argocd/applicationset.yaml"
+  }
+  provisioner "file" {
+    destination = "${local.yaml_dir_destination}/argocd/dashboard-ingress.yaml"
+    content = templatefile(
+      "${local.yaml_dir_source}/argocd/dashboard-ingress.yaml.tpl",
+      {
+        domain = var.argocd_domain,
+      }
+    )
   }
 
   # init script

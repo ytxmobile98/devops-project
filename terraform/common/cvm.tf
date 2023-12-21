@@ -11,11 +11,11 @@ output "cvm" {
 
     # Instance type
     # See: https://cloud.tencent.com/document/api/213/15749
-    instance_type = "S2.MEDIUM2"
+    instance_type = "S5.LARGE16"
 
     # Disk type
     # See: https://cloud.tencent.com/document/product/362/16312
-    disk_type = "CLOUD_PREMIUM"
+    disk_type = "CLOUD_SSD"
 
     # Instance names
     instance_names = [
