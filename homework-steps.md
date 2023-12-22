@@ -1,4 +1,4 @@
-# 使用 Terraform 创建腾讯云 CVM 机器
+# 大作业完成步骤
 
 ## 准备工作
 
@@ -22,16 +22,16 @@ sudo apt update && sudo apt install terraform
     * 访问方式应启用 **编程访问**。
     * 创建好的用户将会拥有密钥 `SecretId` 和 `SecretKey`。
 
-    ![腾讯云-快速创建用户](../images/tencent-cloud-create-user.png)
+    ![腾讯云-快速创建用户](./images/tencent-cloud-create-user.png)
 3. 创建用户成功。
 
     * 请务必保存用户名、密码和密钥信息，否则将不能再次获取。
 
-    ![腾讯云-创建用户成功](../images/tencent-cloud-create-user-success.png)
+    ![腾讯云-创建用户成功](./images/tencent-cloud-create-user-success.png)
 
-## Terraform 初始化操作 & 部署集群
+## Terraform 初始化操作：创建 CVM 实例，安装 Jenkins、Argo CD、Crossplane、ingress-nginx
 
-在 Terraform 工作目录 [`terraform`](../terraform/) 下，执行
+在 Terraform 工作目录 [`terraform`](./terraform/) 下，执行
 
 ```bash
 # 设置 secret id 和 secret key
@@ -43,3 +43,30 @@ terraform init
 # 部署集群
 terraform apply --auto-approve
 ```
+
+执行完成后，SSH 进入创建好的实例，执行
+
+```bash
+kubectl get providers
+```
+
+参考输出如下：
+
+```
+NAME                 INSTALLED   HEALTHY   PACKAGE                                              AGE
+provider-terraform   True        True      xpkg.upbound.io/upbound/provider-terraform:v0.11.0   10h
+```
+
+## 登录 Jenkins 界面，进行配置
+
+这里配置的域名是 [jenkins.devops.ytx139.bid](http://jenkins.devops.ytx139.bid)。
+
+登录后，创建一个项目 **devops**，使用**多分支流水线**。
+
+![Jenkins-创建项目"devops"](./images/jenkins-new-item-multibranch-pipelines.png)
+
+## 在 GitHub 配置 Webhook
+
+在 GitHub 仓库的 **Settings** → **Webhooks** 中，添加一个 webhook。
+
+![GitHub-添加Webhook](./images/github-add-webhook.png)

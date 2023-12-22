@@ -6,4 +6,4 @@
 
 ## 具体完成步骤
 
-详见 [docs/README.md](./docs/README.md)。
+详见 [homework-steps.md](./homework-steps.md)。
