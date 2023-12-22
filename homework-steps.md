@@ -64,3 +64,9 @@ provider-terraform   True        True      xpkg.upbound.io/upbound/provider-terr
 登录后，创建一个项目 **devops**，使用**多分支流水线**。
 
 ![Jenkins-创建项目"devops"](./images/jenkins-new-item-multibranch-pipelines.png)
+
+## 在 GitHub 配置 Webhook
+
+在 GitHub 仓库的 **Settings** → **Webhooks** 中，添加一个 webhook。
+
+![GitHub-添加Webhook](./images/github-add-webhook.png)
